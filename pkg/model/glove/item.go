@@ -18,9 +18,9 @@ import (
 	"fmt"
 	"math"
 
-	co "github.com/ynqa/wego/pkg/corpus/cooccurrence"
-	"github.com/ynqa/wego/pkg/corpus/cooccurrence/encode"
-	"github.com/ynqa/wego/pkg/util/clock"
+	co "github.com/wujunfeng1/wego/pkg/corpus/cooccurrence"
+	"github.com/wujunfeng1/wego/pkg/corpus/cooccurrence/encode"
+	"github.com/wujunfeng1/wego/pkg/util/clock"
 )
 
 type item struct {

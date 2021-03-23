@@ -21,10 +21,10 @@ import (
 	"io"
 
 	"github.com/pkg/errors"
-	"github.com/ynqa/wego/pkg/corpus/dictionary"
-	"github.com/ynqa/wego/pkg/model/modelutil/matrix"
-	"github.com/ynqa/wego/pkg/util/clock"
-	"github.com/ynqa/wego/pkg/util/verbose"
+	"github.com/wujunfeng1/wego/pkg/corpus/dictionary"
+	"github.com/wujunfeng1/wego/pkg/model/modelutil/matrix"
+	"github.com/wujunfeng1/wego/pkg/util/clock"
+	"github.com/wujunfeng1/wego/pkg/util/verbose"
 )
 
 func InvalidTypeError(typ Type) error {

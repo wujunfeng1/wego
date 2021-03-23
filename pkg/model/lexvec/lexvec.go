@@ -23,18 +23,18 @@ import (
 
 	"golang.org/x/sync/semaphore"
 
-	"github.com/ynqa/wego/pkg/corpus"
-	co "github.com/ynqa/wego/pkg/corpus/cooccurrence"
-	"github.com/ynqa/wego/pkg/corpus/cooccurrence/encode"
-	"github.com/ynqa/wego/pkg/corpus/fs"
-	"github.com/ynqa/wego/pkg/corpus/memory"
-	"github.com/ynqa/wego/pkg/model"
-	"github.com/ynqa/wego/pkg/model/modelutil"
-	"github.com/ynqa/wego/pkg/model/modelutil/matrix"
-	"github.com/ynqa/wego/pkg/model/modelutil/subsample"
-	"github.com/ynqa/wego/pkg/model/modelutil/vector"
-	"github.com/ynqa/wego/pkg/util/clock"
-	"github.com/ynqa/wego/pkg/util/verbose"
+	"github.com/wujunfeng1/wego/pkg/corpus"
+	co "github.com/wujunfeng1/wego/pkg/corpus/cooccurrence"
+	"github.com/wujunfeng1/wego/pkg/corpus/cooccurrence/encode"
+	"github.com/wujunfeng1/wego/pkg/corpus/fs"
+	"github.com/wujunfeng1/wego/pkg/corpus/memory"
+	"github.com/wujunfeng1/wego/pkg/model"
+	"github.com/wujunfeng1/wego/pkg/model/modelutil"
+	"github.com/wujunfeng1/wego/pkg/model/modelutil/matrix"
+	"github.com/wujunfeng1/wego/pkg/model/modelutil/subsample"
+	"github.com/wujunfeng1/wego/pkg/model/modelutil/vector"
+	"github.com/wujunfeng1/wego/pkg/util/clock"
+	"github.com/wujunfeng1/wego/pkg/util/verbose"
 )
 
 type lexvec struct {

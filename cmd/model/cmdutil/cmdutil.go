@@ -19,7 +19,7 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/ynqa/wego/pkg/model/modelutil/vector"
+	"github.com/wujunfeng1/wego/pkg/model/modelutil/vector"
 )
 
 const (

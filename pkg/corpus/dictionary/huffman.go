@@ -17,7 +17,7 @@ package dictionary
 import (
 	"sort"
 
-	"github.com/ynqa/wego/pkg/corpus/dictionary/node"
+	"github.com/wujunfeng1/wego/pkg/corpus/dictionary/node"
 )
 
 func (d *Dictionary) HuffnamTree(dim int) []*node.Node {

@@ -22,9 +22,9 @@ import (
 
 	"github.com/peterh/liner"
 	"github.com/pkg/errors"
-	"github.com/ynqa/wego/pkg/embedding"
-	"github.com/ynqa/wego/pkg/embedding/embutil"
-	"github.com/ynqa/wego/pkg/search"
+	"github.com/wujunfeng1/wego/pkg/embedding"
+	"github.com/wujunfeng1/wego/pkg/embedding/embutil"
+	"github.com/wujunfeng1/wego/pkg/search"
 )
 
 type searchparams struct {

@@ -18,7 +18,7 @@ import (
 	"bufio"
 	"io"
 
-	"github.com/ynqa/wego/pkg/corpus/dictionary"
+	"github.com/wujunfeng1/wego/pkg/corpus/dictionary"
 )
 
 func scanner(r io.Reader) *bufio.Scanner {

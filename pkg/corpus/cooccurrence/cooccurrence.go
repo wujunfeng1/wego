@@ -20,7 +20,7 @@ import (
 
 	"github.com/pkg/errors"
 
-	"github.com/ynqa/wego/pkg/corpus/cooccurrence/encode"
+	"github.com/wujunfeng1/wego/pkg/corpus/cooccurrence/encode"
 )
 
 type CountType = string

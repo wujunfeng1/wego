@@ -1,4 +1,4 @@
-module github.com/ynqa/wego
+module github.com/wujunfeng1/wego
 
 go 1.15
 

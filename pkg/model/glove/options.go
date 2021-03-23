@@ -18,7 +18,7 @@ import (
 	"runtime"
 
 	"github.com/spf13/cobra"
-	co "github.com/ynqa/wego/pkg/corpus/cooccurrence"
+	co "github.com/wujunfeng1/wego/pkg/corpus/cooccurrence"
 )
 
 type SolverType = string

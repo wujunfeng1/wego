@@ -22,9 +22,9 @@ import (
 	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
 
-	"github.com/ynqa/wego/cmd/model/cmdutil"
-	"github.com/ynqa/wego/pkg/model/modelutil/vector"
-	"github.com/ynqa/wego/pkg/model/word2vec"
+	"github.com/wujunfeng1/wego/cmd/model/cmdutil"
+	"github.com/wujunfeng1/wego/pkg/model/modelutil/vector"
+	"github.com/wujunfeng1/wego/pkg/model/word2vec"
 )
 
 var (

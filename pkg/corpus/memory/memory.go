@@ -19,12 +19,12 @@ import (
 	"io"
 	"strings"
 
-	"github.com/ynqa/wego/pkg/corpus"
-	co "github.com/ynqa/wego/pkg/corpus/cooccurrence"
-	"github.com/ynqa/wego/pkg/corpus/cpsutil"
-	"github.com/ynqa/wego/pkg/corpus/dictionary"
-	"github.com/ynqa/wego/pkg/util/clock"
-	"github.com/ynqa/wego/pkg/util/verbose"
+	"github.com/wujunfeng1/wego/pkg/corpus"
+	co "github.com/wujunfeng1/wego/pkg/corpus/cooccurrence"
+	"github.com/wujunfeng1/wego/pkg/corpus/cpsutil"
+	"github.com/wujunfeng1/wego/pkg/corpus/dictionary"
+	"github.com/wujunfeng1/wego/pkg/util/clock"
+	"github.com/wujunfeng1/wego/pkg/util/verbose"
 )
 
 type Corpus struct {

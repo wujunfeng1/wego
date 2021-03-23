@@ -22,7 +22,7 @@ import (
 
 	"github.com/pkg/errors"
 
-	"github.com/ynqa/wego/pkg/embedding/embutil"
+	"github.com/wujunfeng1/wego/pkg/embedding/embutil"
 )
 
 type Embedding struct {
