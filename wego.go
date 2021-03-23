@@ -20,11 +20,11 @@ import (
 	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
 
-	"github.com/ynqa/wego/cmd/model/glove"
-	"github.com/ynqa/wego/cmd/model/lexvec"
-	"github.com/ynqa/wego/cmd/model/word2vec"
-	"github.com/ynqa/wego/cmd/query"
-	"github.com/ynqa/wego/cmd/query/console"
+	"github.com/wujunfeng1/wego/cmd/model/glove"
+	"github.com/wujunfeng1/wego/cmd/model/lexvec"
+	"github.com/wujunfeng1/wego/cmd/model/word2vec"
+	"github.com/wujunfeng1/wego/cmd/query"
+	"github.com/wujunfeng1/wego/cmd/query/console"
 )
 
 func main() {
