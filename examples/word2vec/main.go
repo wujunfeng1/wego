@@ -17,8 +17,8 @@ package main
 import (
 	"os"
 
-	"github.com/ynqa/wego/pkg/model/modelutil/vector"
-	"github.com/ynqa/wego/pkg/model/word2vec"
+	"github.com/wujunfeng1/wego/pkg/model/modelutil/vector"
+	"github.com/wujunfeng1/wego/pkg/model/word2vec"
 )
 
 func main() {
@@ -27,9 +27,9 @@ func main() {
 		word2vec.Model(word2vec.Cbow),
 		word2vec.Optimizer(word2vec.NegativeSampling),
 		word2vec.NegativeSampleSize(5),
-		//word2vec.Verbose(),
+		word2vec.Verbose(),
 		//word2vec.DocInMemory(),
-		word2vec.LogBatch(1000),
+		word2vec.LogBatch(1000000),
 	)
 
 	if err != nil {
