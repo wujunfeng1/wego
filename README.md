@@ -1,5 +1,8 @@
-# Word Embeddings in Go (forked from ynqa/wego and revised to overcome the deadlocks caused by cbow channel)
+# Word Embeddings in Go (forked from ynqa/wego and revised)
 
+This is a revised version of ynqa/wego with the following modifications/additions:
+(1) overcome the deadlocks caused by cbow channel;
+(2) allow reloading the saved model from files by calling TrainWith of word2vec/glove/lexvec
 
 *wego* is the implementations **from scratch** for word embeddings (a.k.a word representation) models in Go.
 
