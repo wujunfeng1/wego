@@ -19,6 +19,8 @@ import (
 	"bytes"
 	"fmt"
 	"io"
+	"strconv"
+	"strings"
 
 	"github.com/pkg/errors"
 	"github.com/wujunfeng1/wego/pkg/corpus/dictionary"
@@ -63,6 +65,47 @@ func Save(f io.Writer, dic *dictionary.Dictionary, mat *matrix.Matrix, verbose *
 	writer.WriteString(fmt.Sprintf("%v", buf.String()))
 	verbose.Do(func() {
 		fmt.Printf("saved %d words %v\r\n", dic.Len(), clk.AllElapsed())
+	})
+	return nil
+}
+
+func Load(f io.ReadSeeker, dic *dictionary.Dictionary, mat *matrix.Matrix, verbose *verbose.Verbose, logBatch int) error {
+	if dic.Len() != mat.Row() {
+		return fmt.Errorf("different for length of dic and row of matrix: %d, %d", dic.Len(), mat.Row())
+	}
+	scanner := bufio.NewScanner(f)
+
+	clk := clock.New()
+	numReads := 0
+	for scanner.Scan() {
+		textLine := scanner.Text()
+		fields := strings.Split(textLine, " ")
+		numFields := len(fields)
+		if numFields < 1+mat.Col() {
+			continue
+		}
+		word := fields[0]
+		i, hasWord := dic.ID(word)
+		if !hasWord {
+			continue
+		}
+		row := mat.Slice(i)
+		for j := 0; j < mat.Col(); j++ {
+			value, err := strconv.ParseFloat(fields[j+1], 64)
+			if err != nil {
+				fmt.Println("error reading word vector: ", err)
+			}
+			row[j] = value
+		}
+		numReads++
+		verbose.Do(func() {
+			if numReads%logBatch == 0 {
+				fmt.Printf("loaded %d words %v\r", i, clk.AllElapsed())
+			}
+		})
+	}
+	verbose.Do(func() {
+		fmt.Printf("loaded %d words %v\r\n", numReads, clk.AllElapsed())
 	})
 	return nil
 }

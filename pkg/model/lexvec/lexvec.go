@@ -113,6 +113,50 @@ func (l *lexvec) Train(r io.ReadSeeker) error {
 	return nil
 }
 
+func (l *lexvec) TrainWith(r io.ReadSeeker, s io.ReadSeeker) error {
+	if l.opts.DocInMemory {
+		l.corpus = memory.New(r, l.opts.ToLower, l.opts.MaxCount, l.opts.MinCount)
+	} else {
+		l.corpus = fs.New(r, l.opts.ToLower, l.opts.MaxCount, l.opts.MinCount)
+	}
+
+	if err := l.corpus.Load(
+		&corpus.WithCooccurrence{
+			CountType: co.Increment,
+			Window:    l.opts.Window,
+		},
+		l.verbose, l.opts.BatchSize,
+	); err != nil {
+		return err
+	}
+
+	dic, dim := l.corpus.Dictionary(), l.opts.Dim
+
+	l.param = matrix.New(
+		dic.Len()*2,
+		dim,
+		func(_ int, vec []float64) {
+			for i := 0; i < dim; i++ {
+				vec[i] = (rand.Float64() - 0.5) / float64(dim)
+			}
+		},
+	)
+
+	l.subsampler = subsample.New(dic, l.opts.SubsampleThreshold)
+	vector.Load(s, l.corpus.Dictionary(), l.param, l.verbose, l.opts.LogBatch)
+
+	if l.opts.DocInMemory {
+		if err := l.train(); err != nil {
+			return err
+		}
+	} else {
+		if err := l.batchTrain(); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
 func (l *lexvec) train() error {
 	items, err := l.makeItems(l.corpus.Cooccurrence())
 	if err != nil {

@@ -107,6 +107,49 @@ func (g *glove) Train(r io.ReadSeeker) error {
 	return g.train()
 }
 
+func (g *glove) TrainWith(r io.ReadSeeker, s io.ReadSeeker) error {
+	if g.opts.DocInMemory {
+		g.corpus = memory.New(r, g.opts.ToLower, g.opts.MaxCount, g.opts.MinCount)
+	} else {
+		g.corpus = fs.New(r, g.opts.ToLower, g.opts.MaxCount, g.opts.MinCount)
+	}
+
+	if err := g.corpus.Load(
+		&corpus.WithCooccurrence{
+			CountType: g.opts.CountType,
+			Window:    g.opts.Window,
+		},
+		g.verbose, g.opts.LogBatch,
+	); err != nil {
+		return err
+	}
+
+	dic, dim := g.corpus.Dictionary(), g.opts.Dim
+
+	dimAndBias := dim + 1
+	g.param = matrix.New(
+		dic.Len()*2,
+		dimAndBias,
+		func(_ int, vec []float64) {
+			for i := 0; i < dim+1; i++ {
+				vec[i] = rand.Float64() / float64(dim)
+			}
+		},
+	)
+	vector.Load(s, g.corpus.Dictionary(), g.param, g.verbose, g.opts.LogBatch)
+
+	switch g.opts.SolverType {
+	case Stochastic:
+		g.solver = newStochastic(g.opts)
+	case AdaGrad:
+		g.solver = newAdaGrad(dic, g.opts)
+	default:
+		return errors.Errorf("invalid solver: %s not in %s|%s", g.opts.SolverType, Stochastic, AdaGrad)
+	}
+
+	return g.train()
+}
+
 func (g *glove) train() error {
 	items := g.makeItems(g.corpus.Cooccurrence())
 	itemSize := len(items)

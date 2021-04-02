@@ -132,6 +132,68 @@ func (w *word2vec) Train(r io.ReadSeeker) error {
 	return nil
 }
 
+func (w *word2vec) TrainWith(r io.ReadSeeker, s io.ReadSeeker) error {
+	if w.opts.DocInMemory {
+		w.corpus = memory.New(r, w.opts.ToLower, w.opts.MaxCount, w.opts.MinCount)
+	} else {
+		w.corpus = fs.New(r, w.opts.ToLower, w.opts.MaxCount, w.opts.MinCount)
+	}
+
+	if err := w.corpus.Load(nil, w.verbose, w.opts.LogBatch); err != nil {
+		return err
+	}
+
+	dic, dim := w.corpus.Dictionary(), w.opts.Dim
+
+	w.param = matrix.New(
+		dic.Len(),
+		dim,
+		func(_ int, vec []float64) {
+			for i := 0; i < dim; i++ {
+				vec[i] = (rand.Float64() - 0.5) / float64(dim)
+			}
+		},
+	)
+
+	w.subsampler = subsample.New(dic, w.opts.SubsampleThreshold)
+	vector.Load(s, w.corpus.Dictionary(), w.param, w.verbose, w.opts.LogBatch)
+
+	switch w.opts.ModelType {
+	case SkipGram:
+		w.mod = newSkipGram(w.opts)
+	case Cbow:
+		w.mod = newCbow(w.opts)
+	default:
+		return errors.Errorf("invalid model: %s not in %s|%s", w.opts.ModelType, Cbow, SkipGram)
+	}
+
+	switch w.opts.OptimizerType {
+	case NegativeSampling:
+		w.optimizer = newNegativeSampling(
+			w.corpus.Dictionary(),
+			w.opts,
+		)
+	case HierarchicalSoftmax:
+		w.optimizer = newHierarchicalSoftmax(
+			w.corpus.Dictionary(),
+			w.opts,
+		)
+	default:
+		return errors.Errorf("invalid optimizer: %s not in %s|%s", w.opts.OptimizerType, NegativeSampling, HierarchicalSoftmax)
+	}
+
+	if w.opts.DocInMemory {
+		if err := w.train(); err != nil {
+			return err
+		}
+	} else {
+		if err := w.batchTrain(); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
 func (w *word2vec) train() error {
 	doc := w.corpus.IndexedDoc()
 	indexPerThread := modelutil.IndexPerThread(
